@@ -41,11 +41,7 @@ export default class add extends Component {
           alerttext:'',
           name:'',
           code:'',
-          duration:'',
-          marking_criteria:'',
-          academic_term:'',
-          description:'',      
-          status:'',     
+          status:'',       
         };
         this.onChange = this.onChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +51,7 @@ export default class add extends Component {
       }
 
       componentDidMount = () => {
-        Request.RequestHandle('course/'+this.props.match.params.id,'GET',null,this.getData); 
+        Request.RequestHandle('specializations/'+this.props.match.params.id,'GET',null,this.getData); 
       }
 
       getData(result){
@@ -63,13 +59,9 @@ export default class add extends Component {
         if(result.status){
           var data = result.data.results[0];
           this.setState({
-            name : data.name,
-            code:data.code,
-            duration:data.duration,
-            marking_criteria:data.marking_criteria,
-            academic_term:data.academic_term,
-            description:data.description,
-            status:data.status,
+          name : data.name,
+          status:data.status,
+          code:data.code
           });
         }
       }
@@ -81,17 +73,13 @@ export default class add extends Component {
       handleSubmit(event) {
         event.preventDefault();
         const universityData ={
-            name : this.state.name,
-            code:this.state.code,
-            duration:this.state.duration,
-            marking_criteria:this.state.marking_criteria,
-            academic_term:this.state.academic_term,
-            status:this.state.status,
-            description:this.state.description
+          name : this.state.name,
+          code:this.state.code,
+          status:this.state.status
           }
         
         console.log(universityData);
-        Request.RequestHandle('course/'+this.props.match.params.id,'POST', JSON.stringify(universityData),this.printData); 
+        Request.RequestHandle('specializations/'+this.props.match.params.id,'POST', JSON.stringify(universityData),this.printData); 
       }
 
       printData(Result){
@@ -100,8 +88,6 @@ export default class add extends Component {
         console.log('====================================');
         if(Result.status){
             swal("Succses!", "Your information has been submitted.", "success");
-            window.location.assign("/#/course");
-
         }else{
             this.setState({alerttext:Result.msg,visible:true})
         }
@@ -129,23 +115,21 @@ export default class add extends Component {
 
     resetForm(){
         this.setState({
-          name:'',
-          code:'',
-          duration:'',
-          marking_criteria:'',
-          academic_term:'',
-          description:'',      
-          status:'',
+            name : '',
+            code:'',
+            status:'',
         })
 
     }
+
+    
 
   render() {
     const {alerttext} = this.state;
     return (
         <div className="animated fadeIn">
         <div className="title-bar" id="title-cont">
-                  Edit Course
+                  Edit Specialization
               </div>
           <Row >
           <Col>
@@ -153,17 +137,16 @@ export default class add extends Component {
           
           <Form  ref={(el) => this.myFormRef = el} onSubmit={this.handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 
-            <CardBody>
-              <Alert className="alert alert-danger" isOpen={this.state.visible} >
+                <CardBody>
+                   <Alert color="light" isOpen={this.state.visible} >
                    {alerttext}
                   </Alert>
                     <FormGroup row >
                       <Col md="3">
-                        <Label htmlFor="text-input">Course Name:</Label>
+                        <Label htmlFor="text-input">Name:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Course Name"  />
-                        <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Name"  />
 
                       </Col>
                     </FormGroup>
@@ -173,34 +156,8 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Code:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" autoComplete="email"/>
+                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" />
                         
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Duration:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="duration" name="duration" value={this.state.duration} onChange ={this.onChange} placeholder="Duration" autoComplete="email"/>
-                       
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Marking Criteria:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="marking_criteria" name="marking_criteria" value={this.state.marking_criteria} onChange ={this.onChange} placeholder="Marking Criteria"/>
-                       
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Academic Term:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="academic_term" name="academic_term" value={this.state.academic_term} onChange ={this.onChange} placeholder="Academic Term"/>               
                       </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -208,22 +165,9 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Status:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>
-                       
+                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>               
                       </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Description:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} placeholder="Description" />
-                       
-                      </Col>
-  
-                      <ColoredLine color="red" />
-
-                    </FormGroup>      
+                    </FormGroup>       
                 </CardBody>
                 <CardFooter>
                       <Button type="reset" variant="contained" color="secondary" className="left-margin" onClick={()=>{this.resetForm()}}  >Reset</Button>

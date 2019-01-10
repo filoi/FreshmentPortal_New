@@ -1,6 +1,6 @@
 {
-  "name": "Page404",
+  "name": "Pages",
   "version": "0.0.0",
   "private": true,
-  "main": "./Page404.js"
+  "main": "./Pages.js"
 }

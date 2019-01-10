@@ -41,8 +41,7 @@ export default class add extends Component {
           alerttext:'',
           name:'',
           code:'',
-          description:'',      
-          status:'',      
+          status:'',       
         };
         this.onChange = this.onChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,9 +60,8 @@ export default class add extends Component {
           var data = result.data.results[0];
           this.setState({
           name : data.name,
-          code:data.code,
-          description:data.description,
           status:data.status,
+          code:data.code
           });
         }
       }
@@ -75,10 +73,9 @@ export default class add extends Component {
       handleSubmit(event) {
         event.preventDefault();
         const universityData ={
-            name : this.state.name,
-            code:this.state.code,
-            description:this.state.description,
-            status:this.state.status,
+          name : this.state.name,
+          code:this.state.code,
+          status:this.state.status
           }
         
         console.log(universityData);
@@ -120,7 +117,6 @@ export default class add extends Component {
         this.setState({
             name : '',
             code:'',
-            description:'',
             status:'',
         })
 
@@ -133,7 +129,7 @@ export default class add extends Component {
     return (
         <div className="animated fadeIn">
         <div className="title-bar" id="title-cont">
-                  View University
+                  View Specialization
               </div>
           <Row >
           <Col>
@@ -147,11 +143,10 @@ export default class add extends Component {
                   </Alert>
                     <FormGroup row >
                       <Col md="3">
-                        <Label htmlFor="text-input">Specialization Name:</Label>
+                        <Label htmlFor="text-input">Name:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange} disabled />
-                        <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Name" disabled />
 
                       </Col>
                     </FormGroup>
@@ -161,21 +156,17 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Code:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="code" name="code" value={this.state.code} onChange ={this.onChange} disabled/>
-                       
+                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" disabled />
+                        
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Col md="3">
-                        <Label htmlFor="email-input">Description:</Label>
+                        <Label htmlFor="email-input">Status:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} disabled />
-                       
+                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange}  disabled />               
                       </Col>
-  
-                      <ColoredLine color="red" />
-
                     </FormGroup>       
                 </CardBody>
                 <CardFooter>

@@ -100,8 +100,6 @@ export default class add extends Component {
         console.log('====================================');
         if(Result.status){
             swal("Succses!", "Your information has been submitted.", "success");
-            window.location.assign("/#/university");
-
         }else{
             this.setState({alerttext:Result.msg,visible:true})
         }
@@ -156,7 +154,7 @@ export default class add extends Component {
           <Form  ref={(el) => this.myFormRef = el} onSubmit={this.handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 
                 <CardBody>
-                  <Alert className="alert alert-danger" isOpen={this.state.visible} >
+                   <Alert color="light" isOpen={this.state.visible} >
                    {alerttext}
                   </Alert>
                     <FormGroup row >
@@ -169,7 +167,16 @@ export default class add extends Component {
 
                       </Col>
                     </FormGroup>
-
+                   
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label htmlFor="email-input">E-Mail:</Label>
+                      </Col>
+                      <Col xs="12" md="9">
+                        <Input type="email"  id="email" name="email" value={this.state.email} onChange ={this.onChange} placeholder="E-Mail" autoComplete="email"/>
+                        
+                      </Col>
+                    </FormGroup>
                     <FormGroup row>
                       <Col md="3">
                         <Label htmlFor="email-input">Phone Number:</Label>
@@ -179,27 +186,6 @@ export default class add extends Component {
                        
                       </Col>
                     </FormGroup>
-                   
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">E-Mail:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text"  id="email" name="email" value={this.state.email} onChange ={this.onChange} placeholder="E-Mail" autoComplete="email"/>
-                        
-                      </Col>
-                    </FormGroup>
-
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Year:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="number" id="year" name="year" value={this.state.year} onChange ={this.onChange} placeholder="Year"/>
-                       
-                      </Col>
-                    </FormGroup>
-                    
                     <FormGroup row>
                       <Col md="3">
                         <Label htmlFor="email-input">Web Site:</Label>
@@ -217,7 +203,15 @@ export default class add extends Component {
                         <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>               
                       </Col>
                     </FormGroup>
-                    
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label htmlFor="email-input">Year:</Label>
+                      </Col>
+                      <Col xs="12" md="9">
+                        <Input type="number" id="year" name="year" value={this.state.year} onChange ={this.onChange} placeholder="Year"/>
+                       
+                      </Col>
+                    </FormGroup>
                     <FormGroup row>
                       <Col md="3">
                         <Label htmlFor="email-input">Description:</Label>

@@ -14,6 +14,7 @@ export default class Common {
        
       }
 
+
     getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
           setSelectedKeys, selectedKeys, confirm, clearFilters,
@@ -52,7 +53,14 @@ export default class Common {
             setTimeout(() => this.searchInput.select());
           }
         },
-       
+        render: (text) => (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[this.state.searchText]}
+            autoEscape
+            textToHighlight={text.toString()}
+          />
+        ),
       })
 
       handleSearch = (selectedKeys, confirm) => {

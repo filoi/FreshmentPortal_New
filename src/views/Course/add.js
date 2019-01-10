@@ -41,11 +41,7 @@ export default class add extends Component {
           alerttext:'',
           name:'',
           code:'',
-          duration:'',
-          marking_criteria:'',
-          academic_term:'',
-          description:'',      
-          status:'',            
+          status:'',  
         };
         this.onChange = this.onChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,15 +58,11 @@ export default class add extends Component {
         const universityData ={
             name : this.state.name,
             code:this.state.code,
-            duration:this.state.duration,
-            marking_criteria:this.state.marking_criteria,
-            description:this.state.description,
-            status:this.state.status,
-            academic_term:this.state.academic_term
+            status:this.state.status
           }
         
         console.log(universityData);
-        Request.RequestHandle('course','POST', JSON.stringify(universityData),this.printData); 
+        Request.RequestHandle('specializations','POST', JSON.stringify(universityData),this.printData); 
       }
 
       printData(Result){
@@ -78,9 +70,8 @@ export default class add extends Component {
         console.log(Result);
         console.log('====================================');
         if(Result.status){
+          this.resetForm();
             swal("Succses!", "Your information has been submitted.", "success");
-            window.location.assign("/#/course");
-
         }else{
             this.setState({alerttext:Result.msg,visible:true})
         }
@@ -108,13 +99,9 @@ export default class add extends Component {
 
     resetForm(){
         this.setState({
-            name:'',
+            name : '',
             code:'',
-            duration:'',
-            marking_criteria:'',
-            academic_term:'',
-            description:'',      
-            status:'',
+            status:''
         })
 
     }
@@ -124,7 +111,7 @@ export default class add extends Component {
     return (
         <div className="animated fadeIn">
         <div className="title-bar" id="title-cont">
-                  Add Course
+                  Add Specialization
               </div>
           <Row >
           <Col>
@@ -133,16 +120,15 @@ export default class add extends Component {
           <Form  ref={(el) => this.myFormRef = el} onSubmit={this.handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 
                 <CardBody>
-                  <Alert className="alert alert-danger" isOpen={this.state.visible} >
+                   <Alert color="light" isOpen={this.state.visible} >
                    {alerttext}
                   </Alert>
                     <FormGroup row >
                       <Col md="3">
-                        <Label htmlFor="text-input">Course Name:</Label>
+                        <Label htmlFor="text-input">Name:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Course Name"  />
-                        <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Name"  />
 
                       </Col>
                     </FormGroup>
@@ -152,34 +138,8 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Code:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" autoComplete="email"/>
+                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" />
                         
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Duration:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="duration" name="duration" value={this.state.duration} onChange ={this.onChange} placeholder="Duration" autoComplete="email"/>
-                       
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Marking Criteria:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="marking_criteria" name="marking_criteria" value={this.state.marking_criteria} onChange ={this.onChange} placeholder="Marking Criteria"/>
-                       
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Academic Term:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="academic_term" name="academic_term" value={this.state.academic_term} onChange ={this.onChange} placeholder="Academic Term"/>               
                       </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -187,21 +147,8 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Status:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>
-                       
+                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>               
                       </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="email-input">Description:</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} placeholder="Description" />
-                       
-                      </Col>
-  
-                      <ColoredLine color="red" />
-
                     </FormGroup>       
                 </CardBody>
                 <CardFooter>

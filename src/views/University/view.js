@@ -162,7 +162,7 @@ export default class add extends Component {
                         <Label htmlFor="text-input">University Name:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  disabled />
+                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="University Name" disabled />
                         <FormFeedback>Oh noes! that name is already taken</FormFeedback>
 
                       </Col>
@@ -173,7 +173,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">E-Mail:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="email"  id="email" name="email" value={this.state.email} onChange ={this.onChange} autoComplete="email" disabled />
+                        <Input type="email"  id="email" name="email" value={this.state.email} onChange ={this.onChange} placeholder="E-Mail" autoComplete="email" disabled />
                         
                       </Col>
                     </FormGroup>
@@ -182,7 +182,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Phone Number:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="contact_no" name="contact_no" value={this.state.contact_no} onChange ={this.onChange} autoComplete="email" disabled />
+                        <Input type="text" id="contact_no" name="contact_no" value={this.state.contact_no} onChange ={this.onChange} placeholder="Phone Number" autoComplete="email" disabled />
                        
                       </Col>
                     </FormGroup>
@@ -191,7 +191,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Web Site:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="website" name="website" value={this.state.website} onChange ={this.onChange} disabled />
+                        <Input type="text" id="website" name="website" value={this.state.website} onChange ={this.onChange} placeholder="URL" disabled />
                        
                       </Col>
                     </FormGroup>
@@ -200,7 +200,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Status:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} disabled />               
+                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status" disabled />               
                       </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -208,7 +208,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Year:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="number" id="year" name="year" value={this.state.year} onChange ={this.onChange} disabled/>
+                        <Input type="number" id="year" name="year" value={this.state.year} onChange ={this.onChange} placeholder="Year" disabled/>
                        
                       </Col>
                     </FormGroup>
@@ -217,7 +217,7 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Description:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} disabled />
+                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} placeholder="Description" disabled />
                        
                       </Col>
   
@@ -227,7 +227,7 @@ export default class add extends Component {
                 </CardBody>
                 <CardFooter>
                       <Button type="button" variant="contained"  className="left-margin" onClick={()=>{history.goBack()}}  >Cancel</Button>
-                
+  
                 </CardFooter>
                 </Form>
               </Card>

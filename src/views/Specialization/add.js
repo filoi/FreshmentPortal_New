@@ -19,7 +19,15 @@ import swal from 'sweetalert'
 const Request = new RequestHandle();
   
   const history = createHistory();
-  
+  const ColoredLine = ({ color }) => (
+    <hr
+        style={{ 
+            color: color,
+            backgroundColor: color,
+            height: 5
+        }}
+    />
+  );
   
 export default class add extends Component {
     constructor(props) {
@@ -33,8 +41,7 @@ export default class add extends Component {
           alerttext:'',
           name:'',
           code:'',
-          description:'',      
-          status:'',       
+          status:'',  
         };
         this.onChange = this.onChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,8 +58,7 @@ export default class add extends Component {
         const universityData ={
             name : this.state.name,
             code:this.state.code,
-            description:this.state.description,
-            status:this.state.status,
+            status:this.state.status
           }
         
         console.log(universityData);
@@ -64,8 +70,8 @@ export default class add extends Component {
         console.log(Result);
         console.log('====================================');
         if(Result.status){
+          this.resetForm();
             swal("Succses!", "Your information has been submitted.", "success");
-            window.location.assign("/#/specialization");
         }else{
             this.setState({alerttext:Result.msg,visible:true})
         }
@@ -95,8 +101,7 @@ export default class add extends Component {
         this.setState({
             name : '',
             code:'',
-            description:'',
-            status:'',
+            status:''
         })
 
     }
@@ -115,16 +120,15 @@ export default class add extends Component {
           <Form  ref={(el) => this.myFormRef = el} onSubmit={this.handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 
                 <CardBody>
-                  <Alert className="alert alert-danger" isOpen={this.state.visible} >
+                   <Alert color="light" isOpen={this.state.visible} >
                    {alerttext}
                   </Alert>
                     <FormGroup row >
                       <Col md="3">
-                        <Label htmlFor="text-input">Specialization Name:</Label>
+                        <Label htmlFor="text-input">Name:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Specialization Name"  />
-                        <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+                        <Input type="text" id="name" name="name" value={this.state.name} onChange ={this.onChange}  placeholder="Name"  />
 
                       </Col>
                     </FormGroup>
@@ -134,20 +138,18 @@ export default class add extends Component {
                         <Label htmlFor="email-input">Code:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text"  id="email" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" autoComplete="email"/>
+                        <Input type="text"  id="code" name="code" value={this.state.code} onChange ={this.onChange} placeholder="Code" />
                         
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Col md="3">
-                        <Label htmlFor="email-input">Description:</Label>
+                        <Label htmlFor="email-input">Status:</Label>
                       </Col>
                       <Col xs="12" md="9">
-                        <Input type="text" id="description" name="description" value={this.state.description} onChange ={this.onChange} placeholder="Description" autoComplete="email"/>
-                       
+                        <Input type="text" id="status" name="status" value={this.state.status} onChange ={this.onChange} placeholder="Status"/>               
                       </Col>
-                    </FormGroup>
-                       
+                    </FormGroup>       
                 </CardBody>
                 <CardFooter>
                       <Button type="reset" variant="contained" color="secondary" className="left-margin" onClick={()=>{this.resetForm()}}  >Reset</Button>

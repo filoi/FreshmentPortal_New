@@ -23,12 +23,17 @@ const Register = Loadable({
 });
 
 const Page404 = Loadable({
-  loader: () => import('./views/Pages/Page404'),
+  loader: () => import('./views/Pages/Page404/Pages'),
   loading
 });
 
 const Page500 = Loadable({
   loader: () => import('./views/Pages/Page500'),
+  loading
+});
+
+const Home = Loadable({
+  loader: () => import('./views/Home/index.js'),
   loading
 });
 
@@ -42,6 +47,7 @@ class App extends Component {
             <Route exact path="/register" name="Register Page" component={Register} />
             <Route exact path="/404" name="Page 404" component={Page404} />
             <Route exact path="/500" name="Page 500" component={Page500} />
+            <Route exact path="/home" name="Base" component={Home} />
             <Route path="/" name="Home" component={DefaultLayout} />
           </Switch>
       </HashRouter>

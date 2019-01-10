@@ -21,6 +21,9 @@ const Auth = new AuthService();
 const Request = new RequestHandle();
 const CommonRequest = new Common();
 
+
+
+
   export default class University extends withAuth(Component) {
     constructor(props) {
       super(props);
@@ -28,7 +31,7 @@ const CommonRequest = new Common();
         dataSource: [],
         data: [],
         pagination: {},
-        loading: false  ,
+        loading: false  
       }
       this.printData = this.printData.bind(this);
       this.deleteRows = this.deleteRows.bind(this);
@@ -83,7 +86,7 @@ const CommonRequest = new Common();
           title: 'Action',
           dataIndex: 'action',
           key: 'action',
-          width: '16%',
+          width: '13%',
         },{
           title: 'Name',
           dataIndex: 'name',
@@ -134,6 +137,7 @@ const CommonRequest = new Common();
      })
     }
 
+
     editData(item){
       console.log('====================================');
       console.log(item);
@@ -163,7 +167,6 @@ const CommonRequest = new Common();
           this.setState({
             isLoadedData: false,  
           });
-          window.location.assign("/#/university");
         } else {
         }
       });

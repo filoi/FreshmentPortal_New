@@ -42,7 +42,7 @@ class Login extends Component {
         if (username && password && captch) {
           Auth.login(username,password)
             .then(res =>{
-             // console.log(res)
+              console.log(res);
                this.props.history.replace('/');
       this.setState({restext:'mail and password required'});
 
