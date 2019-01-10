@@ -231,7 +231,7 @@ export default class componentName extends Component {
             }).then((value) => {
               switch (value) {
                 case "catch":
-          window.location.assign("http://localhost/Filoi%20Job%20Portal/Job%20Portal/");
+          window.location.assign("/#/home");
                   break;
     
                   default:
