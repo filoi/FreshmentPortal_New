@@ -317,35 +317,37 @@ export default class componentName extends Component {
                 <Card className="p-4">
                   <CardBody>
                     <Form onSubmit={this.handleSubmit}>
-                      <h1>Login</h1>
+                      <h2>Login</h2>
                       <p className="text-muted" >{this.state.restext}</p>
-                      <InputGroup className="mb-3">
+                      <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-user"></i>
+                            Email
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" name="username" value={username} onChange={this.handleChange} />
+                        <Input type="text" className="narrow-input" placeholder="Username" autoComplete="username" name="username" value={username} onChange={this.handleChange} />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-lock"></i>
+                            Password
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" name="password" value={password} onChange={this.handleChange} />
+                        <Input type="password" className="narrow-input" placeholder="Password" autoComplete="current-password" name="password" value={password} onChange={this.handleChange} />
                       </InputGroup>
+                      <InputGroup className="" style={{textAlign: "center", marginBottom: "20px"}}>
                       <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey="6LeMt4cUAAAAAJM5mRItOigf3R_UGFPbjdlTG0uc"
-                        onChange={this.ReCAPTCHAGGet}
-                      />
+                          ref={recaptchaRef}
+                          sitekey="6LeMt4cUAAAAAJM5mRItOigf3R_UGFPbjdlTG0uc"
+                          onChange={this.ReCAPTCHAGGet}
+                        />
+                      </InputGroup>
                       <Row>
                         <Col xs="6">
                           <Button color="primary" className="px-4">Login</Button>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
+                          Forgot password?
                         </Col>
                       </Row>
                     </Form>
@@ -368,7 +370,7 @@ export default class componentName extends Component {
                       <InputGroupAddon addonType="prepend">
                         First Name
                       </InputGroupAddon>
-                      <Input type="text" name="fname" placeholder="First Name" autoComplete="email" onChange ={this.onChange} />
+                      <Input type="text" name="fname" className="narrow-input" placeholder="First Name" autoComplete="email" onChange ={this.onChange} />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
@@ -377,7 +379,7 @@ export default class componentName extends Component {
                           Last Name
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" name="lname" placeholder="Last Name" autoComplete="new-password" onChange ={this.onChange} />
+                      <Input type="text" name="lname" className="narrow-input" placeholder="Last Name" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
@@ -386,7 +388,7 @@ export default class componentName extends Component {
                           Email
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" name="email" placeholder="Email" autoComplete="new-password" onChange ={this.onChange} />
+                      <Input type="text" name="email" className="narrow-input" placeholder="Email" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
@@ -397,11 +399,11 @@ export default class componentName extends Component {
                       </InputGroupAddon>
 
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText style={{width:"50px",backgroundColor:"white"}}>
+                        <InputGroupText style={{width:"50px",backgroundColor:"white"}} className="narrow-input">
                           +91
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" name="contact_no" placeholder="Contact Number" autoComplete="new-password" onChange ={this.onChange} />
+                      <Input type="text" name="contact_no" className="narrow-input" placeholder="Contact Number" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
@@ -410,7 +412,7 @@ export default class componentName extends Component {
                           College
                         </InputGroupText>
                       </InputGroupAddon>
-                        <div style={{width:"50%"}}>
+                        <div style={{width:"270px"}}>
                             <Select
                               value={college_details}
                               onChange={this.handleChangeCollege}
@@ -419,13 +421,13 @@ export default class componentName extends Component {
                         </div>
                     </InputGroup>
 
-                    <InputGroup className="mb-3">
+                    <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           Course
                         </InputGroupText>
                       </InputGroupAddon>
-                        <div style={{width:"50%"}}>
+                        <div style={{width:"270px"}}>
                             <Select
                               value={course_details}
                               onChange={this.handleChangeCourse}
@@ -434,9 +436,15 @@ export default class componentName extends Component {
                         </div>
                     </InputGroup>
 
-                    <Button color="success" block>Enroll</Button>
-                    <a className="mt-1 form-control btn btn-info" href="http://localhost/Filoi%20Job%20Portal/Job%20Portal/">Home</a>
-                    <a className="mt-1 form-control btn btn-default" href="http://localhost:3000/#/login">I already have an account</a>
+                    <InputGroup className="" style={{textAlign: "center", marginBottom: "20px"}}>
+                    <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey="6LeMt4cUAAAAAJM5mRItOigf3R_UGFPbjdlTG0uc"
+                        onChange={this.ReCAPTCHAGGet}
+                      />
+                    </InputGroup>
+
+                    <Button className="btn btn-success" style={{background: "#4dbd74"}} block>Enroll</Button>
                   </Form>
                 </CardBody>
                 
