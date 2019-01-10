@@ -251,11 +251,11 @@ html:not([dir="rtl"]) .aside-menu
 {
     font-weight:bold;
     width:100%;
-    padding:5px;
+    padding:7px;
     text-align:center;
     font-size:14px;
-    background:#28B463;
-    color:#fff;
+    background:rgb(223, 247, 255);
+    color:rgb(0, 138, 202);
 }
 
 header{
@@ -329,7 +329,7 @@ header{
   }
 
   td{
-    height: 25px !important;
+    height: 15px !important;
   }
   .flotingBtn{
     bottom: 40px !important;

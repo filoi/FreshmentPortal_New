@@ -3,7 +3,7 @@ import {  DropdownItem, DropdownMenu, DropdownToggle, Nav } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import {  AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg'
+import logo from '../../assets/img/brand/logo-text.png';
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import AuthService from '../../components/AuthService';
 const Auth = new AuthService();
@@ -35,15 +35,15 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
+          full={{ src: logo, width: 150, height: 30, alt: 'Job Portal' }}
+          minimized={{ src: sygnet, width: 30, height: 30, alt: 'Job Portal' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
         <Nav className="ml-auto" navbar>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src="https://eabiawak.com/wp-content/uploads/2017/07/photo.png" className="img-avatar" alt="USER" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>

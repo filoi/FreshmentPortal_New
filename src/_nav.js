@@ -11,7 +11,7 @@ export default {
     },
     {
       title: true,
-      name: 'Theme',
+      name: 'Master Data',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
@@ -19,60 +19,24 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'University',
+      name: 'Universities',
       url: '/university',
-      icon: 'icon-graduation',
+      icon: 'icon-home',
     },
     {
-      name: 'Specialization',
-      url: '/specialization',
-      icon: 'icon-graduation',
-    },
-    {
-      name: 'Course',
-      url: '/course',
-      icon: 'icon-graduation',
-    }
-    ,
-    {
-      name: 'College',
+      name: 'Colleges',
       url: '/college',
       icon: 'icon-graduation',
     },
     {
-      name: 'Icons',
-      url: '/icons',
-      icon: 'icon-star',
-      children: [
-        {
-          name: 'CoreUI Icons',
-          url: '/icons/coreui-icons',
-          icon: 'icon-star',
-          badge: {
-            variant: 'info',
-            text: 'NEW',
-          },
-        },
-        {
-          name: 'Flags',
-          url: '/icons/flags',
-          icon: 'icon-star',
-        },
-        {
-          name: 'Font Awesome',
-          url: '/icons/font-awesome',
-          icon: 'icon-star',
-          badge: {
-            variant: 'secondary',
-            text: '4.7',
-          },
-        },
-        {
-          name: 'Simple Line Icons',
-          url: '/icons/simple-line-icons',
-          icon: 'icon-star',
-        },
-      ],
+      name: 'Courses',
+      url: '/course',
+      icon: 'icon-book-open',
+    },
+    {
+      name: 'Specializations',
+      url: '/specialization',
+      icon: 'icon-tag',
     },
   ],
 };
