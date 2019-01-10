@@ -28,7 +28,7 @@ class DefaultHeader extends Component {
       this.props.history.replace('/');
     }
     catch(err){}
-    window.location.assign("/home");
+    window.location.assign("/#/home");
 
   }
 
