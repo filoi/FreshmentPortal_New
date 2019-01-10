@@ -5,11 +5,13 @@ import './css/style.css'
 import './skins/default.css'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { Button, Card, CardBody, CardGroup, Col, CardFooter, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Alert,Button, Card, CardBody, CardGroup, Col, CardFooter, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
  import AuthService from '../../components/AuthService';
  import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
+import Select from 'react-select';
+import swal from 'sweetalert';
 const recaptchaRef = React.createRef();
 
  const Auth = new AuthService();
@@ -27,12 +29,228 @@ export default class componentName extends Component {
             studentOpen: false,
             submitted: false,
             captch:false,
-            restext:'Sign In to your account'
+            restext:'Sign In to your account',
+            college_details: null,
+            course_details:null,
+            college:[],
+            course:[], 
+            visible: false,
+            alerttext:'',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.ReCAPTCHAGGet = this.ReCAPTCHAGGet.bind(this);
+        this.onChange = this.onChange.bind(this); 
+        this.handleSubmitEnrol = this.handleSubmitEnrol.bind(this);
+        this.onDismiss = this.onDismiss.bind(this);
 
+    }
+
+    onDismiss() {
+      this.setState({ visible: false });
+    }
+
+    handleChangeCollege = (college_details) => {
+      this.setState({ college_details });
+      console.log(`Option selected:`, college_details.value);
+  
+      if(college_details.value==="other")
+      {
+        console.log("mano")
+      }
+    }
+  
+    handleChangeCourse = (course_details) => {
+      this.setState({ course_details });
+      console.log(`Option selected:`, course_details);
+  
+      if(course_details.value==="other")
+      {
+        console.log("mano")
+      }
+    }
+
+    onChange(e){
+      this.setState({[e.target.name]:e.target.value});
+    }
+
+    componentDidMount() {
+
+      this.get_college();
+      this.get_course(); 
+  
+    }
+  
+    get_college()
+    {
+      try{
+        let url1='http://139.59.73.212:5000/api/college/getall/full'
+          fetch(url1,{
+            method:'GET',
+            mode: 'cors',
+            body:null
+    
+          })
+            .then(res => res.json())
+            .then(
+              (tables) => {
+              if(tables.data.length>0)
+              {
+                var array = [];
+                var datas=tables.data;
+                datas.forEach(function(item) {
+                  array.push({value:item._id,label:item.name});
+                });
+  
+                array.push({value:"other",label:"Other"});
+  
+                this.setState({
+                  college: array,
+                  college_details:array[0]
+                  
+                });
+              }
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error
+                });
+              }
+            );
+          }
+    
+          catch(error)
+          {
+            console.log(error);
+          }
+    }
+  
+    get_course()
+    {
+      try{
+        let url1='http://139.59.73.212:5000/api/course/getall/full'
+          fetch(url1,{
+            method:'GET',
+            mode: 'cors',
+            body:null
+    
+          })
+            .then(res => res.json())
+            .then(
+              (tables) => {
+              if(tables.data.length>0)
+              {
+                var array = [];
+                var datas=tables.data;
+                datas.forEach(function(item) {
+                  array.push({value:item._id,label:item.name});
+                });
+  
+                array.push({value:"other",label:"Other"});
+  
+                this.setState({
+                  course: array,
+                  course_details:array[0]
+                  
+                });
+              }
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error
+                });
+              }
+            );
+          }
+    
+          catch(error)
+          {
+            console.log(error);
+          }
+    }
+
+    handleSubmitEnrol(event) {
+      event.preventDefault();
+      // if( !this.ValidationForm()){
+      //   return false;
+      // }
+  
+      this.setState({
+        isLoaded: true,
+        formdata: event.target,
+      });
+  
+      const universityData ={
+        fname : this.state.fname,
+        lname : this.state.lname,
+        email:this.state.email,
+        contact_no:this.state.contact_no,
+        college_id:this.state.college_details.value,
+        course_id:this.state.course_details.value,
+      }
+  
+      var formBody = [];
+      for (var property in universityData) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(universityData[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+  
+      console.log('====================================');
+      console.log(formBody);
+      console.log('====================================');
+      fetch("http://139.59.73.212:5000/api/students/enroll/new", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody,
+          
+      }).then(response =>response.json())
+        .then((result) => {
+          console.log('====================================');
+      console.log(JSON.stringify(result));
+      console.log('====================================');
+          this.setState({
+            isLoaded: false,
+          });
+          if(result.status){
+            swal({
+              title: "Success",
+              text: "You have been enrolled into the system successfully. Please check your email for more details.",
+              icon: "success",
+              buttons: {
+                catch: {
+                  text: "Continue",
+                  value: "catch",
+                },
+              },
+            }).then((value) => {
+              switch (value) {
+                case "catch":
+          window.location.assign("http://localhost/Filoi%20Job%20Portal/Job%20Portal/");
+                  break;
+    
+                  default:
+                  
+                  this.state.formdata.reset();
+              }
+            }); 
+          }else{
+  
+            this.setState({
+              alerttext: result.msg,
+              visible: true,
+            });
+  
+          }
+      },
+      (error) =>  {  console.log(error)}
+    )
+    .catch(err => console.log(err));
     }
 
       onOpenModal = () => {
@@ -90,7 +308,7 @@ export default class componentName extends Component {
 
 
   render() {
-    const { username, password } = this.state;
+    const { username, password,college_details,course_details,college,course,alerttext } = this.state;
     const { open ,studentOpen} = this.state;
     return (
         <div className="body-layer">
@@ -139,52 +357,89 @@ export default class componentName extends Component {
          <CardGroup>
          <Card className="mx-4">
                 <CardBody>
-                  <Form>
-                    <h1>Register</h1>
-                    <p className="text-muted">Create your account</p>
+                <Form onSubmit={this.handleSubmitEnrol} encType="multipart/form-data">
+                    <h2>Student Enrollment</h2>
+                    <p className="text-muted"></p>
+                    
+                    <Alert className="alert alert-danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+                    {alerttext}
+                    </Alert>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        First Name
+                      </InputGroupAddon>
+                      <Input type="text" name="fname" placeholder="First Name" autoComplete="email" onChange ={this.onChange} />
+                    </InputGroup>
+
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-user"></i>
+                          Last Name
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" placeholder="Username" autoComplete="username" />
+                      <Input type="text" name="lname" placeholder="Last Name" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>@</InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Email" autoComplete="email" />
-                    </InputGroup>
+
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-lock"></i>
+                          Email
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Password" autoComplete="new-password" />
+                      <Input type="text" name="email" placeholder="Email" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
-                    <InputGroup className="mb-4">
+
+                    <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-lock"></i>
+                          Contact
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Repeat password" autoComplete="new-password" />
+
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText style={{width:"50px",backgroundColor:"white"}}>
+                          +91
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" name="contact_no" placeholder="Contact Number" autoComplete="new-password" onChange ={this.onChange} />
                     </InputGroup>
-                    <Button color="success" block>Create Account</Button>
+
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          College
+                        </InputGroupText>
+                      </InputGroupAddon>
+                        <div style={{width:"50%"}}>
+                            <Select
+                              value={college_details}
+                              onChange={this.handleChangeCollege}
+                              options={college}
+                            />
+                        </div>
+                    </InputGroup>
+
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          Course
+                        </InputGroupText>
+                      </InputGroupAddon>
+                        <div style={{width:"50%"}}>
+                            <Select
+                              value={course_details}
+                              onChange={this.handleChangeCourse}
+                              options={course}
+                            />
+                        </div>
+                    </InputGroup>
+
+                    <Button color="success" block>Enroll</Button>
+                    <a className="mt-1 form-control btn btn-info" href="http://localhost/Filoi%20Job%20Portal/Job%20Portal/">Home</a>
+                    <a className="mt-1 form-control btn btn-default" href="http://localhost:3000/#/login">I already have an account</a>
                   </Form>
                 </CardBody>
-                <CardFooter className="p-4">
-                  <Row>
-                    <Col xs="12" sm="6">
-                      <Button className="btn-facebook mb-1" block><span>facebook</span></Button>
-                    </Col>
-                    <Col xs="12" sm="6">
-                      <Button className="btn-twitter mb-1" block><span>twitter</span></Button>
-                    </Col>
-                  </Row>
-                </CardFooter>
+                
               </Card>
               </CardGroup>
         </Modal>
@@ -237,15 +492,15 @@ export default class componentName extends Component {
             <div className="container">   
               {/* Start Header Navigation */}
               <div className="navbar-header">
-                <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                <button style={{display: 'none'}} type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                   <i className="fa fa-bars" />
                 </button>
-                <a className="navbar-brand" href="#brand"><img src="img/brand/logo-white.png" className="logo" alt style={{background: '#fff', borderRadius: '10px', width: '200px', marginTop: '-2px'}} /></a>
+                <a className="navbar-brand" href="#brand"><img src="../../assets/img/logo-text.png" className="logo" style={{background: '#fff', borderRadius: '10px', width: '200px', marginTop: '-2px'}} /></a>
               </div>
               {/* End Header Navigation */}
               {/* Collect the nav links, forms, and other content for toggling */}
-              <div className="collapse navbar-collapse" id="navbar-menu">
-                <ul className="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+              <div className="" id="navbar-menu">
+                <ul className="nav navbar-nav navbar-right" style={{flexDirection: "unset"}}>
                   <li className="active"><a href="index.html">Home</a></li>
                   <li className="dropdown">
                     <a href="about.html">About</a>
@@ -262,7 +517,7 @@ export default class componentName extends Component {
           </nav>
           {/* End Navigation */}
           {/* START REVOLUTION SLIDER 5.0 */}
-          <Carousel>
+          <Carousel showArrows={true} showIndicators={false} showThumbs={false}>
                 <div>
                     <img src= {"../../assets/img/avatars/slide12.jpg"} />
                     <p className="legend">Legend 1</p>
@@ -278,10 +533,10 @@ export default class componentName extends Component {
             </Carousel>
           {/* END OF SLIDER WRAPPER */}
           {/* Start contain wrapp */}
-          <div className="contain-wrapp paddingbot-clear">
+          <div className="contain-wrapp paddingbot-clear" style={{background: "#fff", paddingBottom: "40px"}}>
             <div className="container">
-              <div className="row marginbot50">
-                <div className="col-md-8 col-md-offset-2 text-center">
+              <div className="row marginbot70">
+                <div className="col-md-12 text-center">
                   <div className="section-heading text-center">
                     <h5>About us</h5>
                   </div>
@@ -289,186 +544,15 @@ export default class componentName extends Component {
                     Per in purto noster officiis, ferri accusam detraxit no duo, vidit vivendum sit ea. Ex pro regione tibique. Sed ea porro explicari, noster pertinacia eu eum. Usu in ullum omnesque atomorum, pro integre imperdiet in. Saperet perpetua ut mei, nibh sale meis eam cu. Ut vim modus zril, ex cum erat dictas urbanitas 
                   </p>
                 </div>
+				
               </div>
             </div>
           </div>
-          {/* End contain wrapp */}
-          {/* Start parallax */}
-          <div className="parallax padding-bot30" data-background="img/parallax/bg06.jpg" data-speed="0.2" data-size="50%">
-            <div className="overlay" />
-            <div className="container">
-              <div className="content-parallax">
-                <div className="row count">
-                  <div className="col-md-12 owl-column-wrapp">
-                    <div className="recent-4column owl-carousel owl-theme">
-                      {/* Start counter 1 */}
-                      <div className="item">
-                        <div className="counter-circle mandy-border">
-                          <i className="fa fa-users icon-circle fa-3x icon-mandy" />
-                          <div className="count-value" data-count={402}><span className="start-count">0</span></div>
-                          <p>Employers</p>
-                        </div>
-                      </div>
-                      {/* End counter 1 */}
-                      {/* Start counter 2 */}
-                      <div className="item">
-                        <div className="counter-circle buttercup-border">
-                          <i className="fa fa-user icon-circle fa-3x icon-buttercup" />
-                          <div className="count-value" data-count={6870}><span className="start-count">0</span></div>
-                          <p>Job Seekers</p>
-                        </div>
-                      </div>
-                      {/* End counter 2 */}
-                      {/* Start counter 3 */}
-                      <div className="item">
-                        <div className="counter-circle picton-border">
-                          <i className="fa fa-thumbs-up icon-circle fa-3x icon-picton" />
-                          <div className="count-value" data-count={4678}><span className="start-count">0</span></div>
-                          <p>Vacancies</p>
-                        </div>
-                      </div>
-                      {/* End counter 3 */}
-                      {/* Start counter 4 */}
-                      <div className="item">
-                        <div className="counter-circle meadow-border">
-                          <i className="fa fa-share-alt icon-circle fa-3x icon-meadow" />
-                          <div className="count-value" data-count={114}><span className="start-count">0</span></div>
-                          <p>Network Growth %</p>
-                        </div>
-                      </div>
-                      {/* End counter 4 */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* End parallax */}
-          {/* Start contain wrapp */}
-          <div className="contain-wrapp padding-bot30">
-            <div className="container">
-              <div className="row">
-                <div className="section-heading text-center">
-                  <h5>Testimonials</h5>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12 owl-column-wrapp">
-                  <div className="recent-3column owl-carousel owl-theme">
-                    {/* Start item 1 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar01.jpg" alt /></a>
-                          <h6>Edah <span>serbo</span></h6>
-                          <p>Owner - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 1 */}
-                    {/* Start item 2 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar02.jpg" alt /></a>
-                          <h6>Asep <span>jebot</span></h6>
-                          <p>CFO - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 2 */}
-                    {/* Start item 3 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar03.jpg" alt /></a>
-                          <h6>Ujang <span>bako</span></h6>
-                          <p>CEO - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 3 */}
-                    {/* Start item 4 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar04.jpg" alt /></a>
-                          <h6>Neng <span>ebrod</span></h6>
-                          <p>Manager - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 4 */}
-                    {/* Start item 5 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar05.jpg" alt /></a>
-                          <h6>Entis <span>kutik</span></h6>
-                          <p>Designer - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 5 */}
-                    {/* Start item 6 */}
-                    <div className="item">
-                      <div className="testimoni-wrapp">
-                        <div className="testimoni">
-                          <blockquote>
-                            <p>
-                              Cu nec salutandi voluptatibus. Ceteros definitionem ad ius, ut eam unum volutpat, omnium gloriatur te mei.
-                            </p>
-                          </blockquote>
-                        </div>
-                        <div className="testimoni-author">
-                          <a href="#" className="avatar"><img src="img/testimoni/avatar06.jpg" alt /></a>
-                          <h6>Dadang <span>bool</span></h6>
-                          <p>Designer - <a href="#">99webpage.com</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* End item 6 */}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* End contain wrapp */}
+		  
+		  <img src= {"../../assets/img/avatars/ststs.jpg"} style={{width: "100%"}}/>
+		  <img src= {"../../assets/img/avatars/quote.jpg"} style={{width: "100%"}}/>
+		  
+          
           {/* Start contain wrapp */}
           <div className="cta-wrapp">
             <div className="container">
