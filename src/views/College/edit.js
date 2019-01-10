@@ -142,9 +142,9 @@ export default class edit extends Component {
           selectedCSOption.push({
             'key':i,
             'course_id':item.course_id,
-            'course':specialization,
+            'course':course,
             'specialization_id':item.specialisation_id,
-            'specialization':course,
+            'specialization':specialization,
             'action':<div><IconButton aria-label="Delete" color="secondary" onClick={() => { this.deleteData(i,item.course_id,item.specialisation_id) }} ><DeleteIcon fontSize="small" /></IconButton></div>
   
           });

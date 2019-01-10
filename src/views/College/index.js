@@ -22,6 +22,8 @@ const Request = new RequestHandle();
 const CommonRequest = new Common();
 
 
+
+
   export default class University extends withAuth(Component) {
     constructor(props) {
       super(props);
@@ -102,11 +104,10 @@ const CommonRequest = new Common();
           key: 'email',
           ...CommonRequest.getColumnSearchProps('email'),
         }, {
-          title: 'university',
-          dataIndex: 'university',
-          key: 'university',
-         
-          ...CommonRequest.getColumnSearchProps('university'),
+          title: 'Website',
+          dataIndex: 'website',
+          key: 'website',
+          ...CommonRequest.getColumnSearchProps('website'),
         }];
 
         return (
@@ -215,7 +216,7 @@ const CommonRequest = new Common();
 
     printData(Result){
       console.log('====================================');
-      console.log(Result.data);
+      console.log(Result.data.pages);
       console.log('====================================');
       if(Result.status){
         let i= 1;
@@ -226,7 +227,7 @@ const CommonRequest = new Common();
             'name':item.name,
             'email':item.email,
             'contact_no':item.contact_no,
-            'university':item.university_doc[0].name,
+            'website':item.website,
             'action':<div><IconButton aria-label="Delete" color="primary" onClick={() => { this.editData(item) }} ><EditIcon fontSize="small"  /></IconButton><IconButton aria-label="Delete" color="primary" onClick={() => { this.viewData(item) }} ><FileIcon fontSize="small" /></IconButton><IconButton aria-label="Delete" color="secondary" onClick={() => { this.deleteData(item._id) }} ><DeleteIcon fontSize="small" /></IconButton></div>
                     });
         });
