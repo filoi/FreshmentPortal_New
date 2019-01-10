@@ -22,6 +22,11 @@ const SpecializationAdd = React.lazy(() => import('./views/Specialization/add'))
 const SpecializationEdit = React.lazy(() => import('./views/Specialization/edit'));
 const SpecializationView = React.lazy(() => import('./views/Specialization/view'));
 
+const Course = React.lazy(() => import('./views/Course'));
+const CourseAdd = React.lazy(() => import('./views/Course/add'));
+const CourseEdit = React.lazy(() => import('./views/Course/edit'));
+const CourseView = React.lazy(() => import('./views/Course/view'));
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -43,6 +48,10 @@ const routes = [
   { path: '/specialization/add', exact: true, name: 'SpecializationAdd', component: SpecializationAdd },
   { path: '/specialization/edit/:id', exact: true, name: 'SpecializationEdit', component: SpecializationEdit },
   { path: '/specialization/view/:id', exact: true, name: 'SpecializationView', component: SpecializationView },
+  { path: '/course', exact: true, name: 'Course', component: Course },
+  { path: '/course/add', exact: true, name: 'CourseAdd', component: CourseAdd },
+  { path: '/course/edit/:id', exact: true, name: 'CourseEdit', component: CourseEdit },
+  { path: '/course/view/:id', exact: true, name: 'CourseView', component: CourseView },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', component: Flags },

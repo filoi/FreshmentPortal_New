@@ -153,7 +153,7 @@ const CommonRequest = new Common();
 
       swal({
         title: "Delete Confirmation",
-        text: "Are you sure that you want to delete this University?",
+        text: "Are you sure that you want to delete this College?",
         icon: "warning",
         buttons: true,
         dangerMode: true,

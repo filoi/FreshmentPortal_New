@@ -147,7 +147,7 @@ const Request = new RequestHandle();
 
       swal({
         title: "Delete Confirmation",
-        text: "Are you sure that you want to delete this University?",
+        text: "Are you sure that you want to delete this Course?",
         icon: "warning",
         buttons: true,
         dangerMode: true,

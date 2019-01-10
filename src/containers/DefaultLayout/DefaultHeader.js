@@ -22,7 +22,13 @@ class DefaultHeader extends Component {
 
   onLogout(e){
     Auth.logout();
-    this.props.history.replace('/');
+    
+    try
+    {
+      this.props.history.replace('/');
+    }
+    catch(err){}
+    window.location.assign("/home");
 
   }
 

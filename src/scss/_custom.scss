@@ -320,18 +320,22 @@ header{
   }
 
   th{
-    line-height: 14px;
+    line-height: 14px !important;
+  }
+
+  th:first-child{
+    width: 130px !important;
   }
 
   td{
-    height: 15px !important;
+    height: 12px !important;
   }
   .flotingBtn{
     bottom: 40px !important;
   }
   
   tbody > tr > td {
-    padding: 10px 16px;
+    padding: 5px 16px !important;
     font-size:13px !important;
 }
 

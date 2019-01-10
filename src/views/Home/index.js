@@ -280,7 +280,7 @@ export default class componentName extends Component {
           Auth.login(username,password)
             .then(res =>{
               console.log(res);
-               this.props.history.replace('/');
+               this.props.history.replace('/university');
       this.setState({restext:'mail and password required'});
 
             })
