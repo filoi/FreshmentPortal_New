@@ -2,8 +2,7 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
+src/components/BaseApi.js
 
 # testing
 /coverage

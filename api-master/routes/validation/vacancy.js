@@ -36,10 +36,12 @@ function CheckValidation(body)
 			
     }else
     {
-      var desLength = Object.keys(body.description).length; // Taking length
+      var desLength = Object.keys(body.description).length; 
+      console.log("--------")
+      console.log(desLength);
       if(desLength < 100 )
           {
-              result = {"msg":"Invalid description Length minimum 100", "status":false, "description":"invalid Contact number", "data":null}
+              result = {"msg":"Invalid description Length minimum 100", "status":false, "description":"description Length minimum 100", "data":null}
               return (result);
               
           }
@@ -103,17 +105,14 @@ function CheckValidation(body)
 
     if(body.minimum_grade==undefined || body.minimum_grade==null || body.minimum_grade=='') 
 		{
-       
+      result = {"msg":"Grades cannot be empty", "status":false, "description":"grades is empty", "data":null}
+      return (result);
     }else
     {
-      if(variables.GRADES.indexOf(list[x].grades)==-1)
-          {
-            result = {"msg":"Grade must be "+variables.GRADES.toString(), "status":false, "description":"grade a b c d e f", "data":null}
-            return (result);  
-          }
-    }
-        result={"status":true}
+      result={"status":true}
         return result;
+    
+    }
 }
 
 module.exports.CheckValidation = CheckValidation;
